@@ -3,6 +3,11 @@
 @{
     Layout = null;
 }
+<script>
+    if (@ViewBag.Error) {
+        alert("@ViewBag.Error");
+    }
+</script>
 <table class="table">
     <tr>
         <th>

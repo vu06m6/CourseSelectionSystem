@@ -131,20 +131,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="CourseMain.cs">
+    <Compile Include="Entities\CourseMain.cs">
       <DependentUpon>CourseSelectionSystemModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CourseSelectionSystemModel.Context.cs">
+    <Compile Include="Entities\CourseSelectionSystemModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CourseSelectionSystemModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="CourseSelectionSystemModel.cs">
+    <Compile Include="Entities\CourseSelectionSystemModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CourseSelectionSystemModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CourseSelectionSystemModel.Designer.cs">
+    <Compile Include="Entities\CourseSelectionSystemModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CourseSelectionSystemModel.edmx</DependentUpon>
@@ -156,10 +156,10 @@
     <Compile Include="Models\SelectionModel.cs" />
     <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StudentCourse.cs">
+    <Compile Include="Entities\StudentCourse.cs">
       <DependentUpon>CourseSelectionSystemModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="StudentMain.cs">
+    <Compile Include="Entities\StudentMain.cs">
       <DependentUpon>CourseSelectionSystemModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -170,12 +170,12 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="CourseSelectionSystemModel.Context.tt">
+    <Content Include="Entities\CourseSelectionSystemModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CourseSelectionSystemModel.Context.cs</LastGenOutput>
       <DependentUpon>CourseSelectionSystemModel.edmx</DependentUpon>
     </Content>
-    <Content Include="CourseSelectionSystemModel.tt">
+    <Content Include="Entities\CourseSelectionSystemModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CourseSelectionSystemModel.edmx</DependentUpon>
       <LastGenOutput>CourseSelectionSystemModel.cs</LastGenOutput>
@@ -183,11 +183,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <EntityDeploy Include="CourseSelectionSystemModel.edmx">
+    <EntityDeploy Include="Entities\CourseSelectionSystemModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CourseSelectionSystemModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="CourseSelectionSystemModel.edmx.diagram">
+    <Content Include="Entities\CourseSelectionSystemModel.edmx.diagram">
       <DependentUpon>CourseSelectionSystemModel.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -331,7 +331,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

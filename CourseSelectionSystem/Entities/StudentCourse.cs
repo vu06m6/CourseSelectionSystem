@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CourseSelectionSystem
+namespace CourseSelectionSystem.Entities
 {
     using System;
     using System.Collections.Generic;

@@ -1,5 +1,10 @@
-﻿@{
+﻿@using CourseSelectionSystem.Entities;
+@{
     ViewBag.Title = "選課";
+}
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <script>alert("@ViewBag.Error");</script>
 }
 <h2>選課</h2>
 <form id="rqForm">

@@ -1,4 +1,5 @@
-﻿using CourseSelectionSystem.Models;
+﻿using CourseSelectionSystem.Entities;
+using CourseSelectionSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -29,20 +30,28 @@ namespace CourseSelectionSystem.Controllers
         /// <returns></returns>
         public ActionResult CourseTable()
         {
-            using (var entity = new CourseSelectionSystemEntities())
+            var result = new List<CourseModel>();
+            try
             {
-                var result = entity.CourseMain.ToList()
-                    .Select(x => new CourseModel
-                    {
-                        Serial = x.Serial.ToString(),
-                        Number = x.Number,
-                        Name = x.Name,
-                        Credits = x.Credits.ToString(),
-                        Location = x.Location,
-                        LecturerName = x.LecturerName,
-                    }).ToList();
-                return PartialView("_CourseTable", result);
+                using (var entity = new CourseSelectionSystemEntities())
+                {
+                    result = entity.CourseMain.ToList()
+                        .Select(x => new CourseModel
+                        {
+                            Serial = x.Serial.ToString(),
+                            Number = x.Number,
+                            Name = x.Name,
+                            Credits = x.Credits.ToString(),
+                            Location = x.Location,
+                            LecturerName = x.LecturerName,
+                        }).ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+            return PartialView("_CourseTable", result);
         }
 
         /// <summary>
@@ -150,19 +159,27 @@ namespace CourseSelectionSystem.Controllers
         /// <returns></returns>
         public ActionResult StudentTable()
         {
-            using (var entity = new CourseSelectionSystemEntities())
+            var result = new List<StudentModel>();
+            try
             {
-                var result = entity.StudentMain.ToList()
-                    .Select(x => new StudentModel
-                    {
-                        Serial = x.Serial.ToString(),
-                        Number = x.Number,
-                        Name = x.Name,
-                        Birthday = x.Birthday.ToString("yyyy-MM-dd"),
-                        Email = x.Email,
-                    }).ToList();
-                return PartialView("_StudentTable", result);
+                using (var entity = new CourseSelectionSystemEntities())
+                {
+                    result = entity.StudentMain.ToList()
+                        .Select(x => new StudentModel
+                        {
+                            Serial = x.Serial.ToString(),
+                            Number = x.Number,
+                            Name = x.Name,
+                            Birthday = x.Birthday.ToString("yyyy-MM-dd"),
+                            Email = x.Email,
+                        }).ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+            return PartialView("_StudentTable", result);
         }
 
         /// <summary>
@@ -253,17 +270,25 @@ namespace CourseSelectionSystem.Controllers
             }
             return Json(new { code, message });
         }
+
         #endregion
 
         #region 選課
         public ActionResult Selection()
         {
-            using (var entity = new CourseSelectionSystemEntities())
+            try
             {
-                ViewBag.Students = entity.StudentMain.ToList();
-                ViewBag.Courses = entity.CourseMain.ToList();
-                return View();
+                using (var entity = new CourseSelectionSystemEntities())
+                {
+                    ViewBag.Students = entity.StudentMain.ToList();
+                    ViewBag.Courses = entity.CourseMain.ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+            return View();
         }
 
         /// <summary>
@@ -272,17 +297,26 @@ namespace CourseSelectionSystem.Controllers
         /// <returns></returns>
         public ActionResult SelectionTable()
         {
-            using (var entity = new CourseSelectionSystemEntities())
+            var result = new List<SelectionModel>();
+            try
             {
-                var result = entity.StudentCourse.ToList().GroupBy(x => x.StudentNumber)
-                    .Select(x => new SelectionModel
-                    {
-                        StudentNumber = x.Key,
-                        Course = string.Join("、", x.Select(y => y.CourseMain.Name)),
-                        CheckedCourse = x.Select(y => y.CourseMain.Number).ToList()
-                    }).ToList();
-                return PartialView("_SelectionTable", result);
+                using (var entity = new CourseSelectionSystemEntities())
+                {
+                    result = entity.StudentCourse.ToList()
+                        .GroupBy(x => x.StudentNumber)
+                        .Select(x => new SelectionModel
+                        {
+                            StudentNumber = x.Key,
+                            Course = string.Join("、", x.Select(y => y.CourseMain.Name)),
+                            CheckedCourse = x.Select(y => y.CourseMain.Number).ToList()
+                        }).ToList();
+                }
             }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+            }
+            return PartialView("_SelectionTable", result);
         }
 
         /// <summary>

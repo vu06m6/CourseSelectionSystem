@@ -14,10 +14,19 @@ namespace CourseSelectionSystem
     
     public partial class StudentMain
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public StudentMain()
+        {
+            this.StudentCourse = new HashSet<StudentCourse>();
+        }
+    
         public long Serial { get; set; }
         public string Number { get; set; }
         public string Name { get; set; }
         public System.DateTime Birthday { get; set; }
         public string Email { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StudentCourse> StudentCourse { get; set; }
     }
 }

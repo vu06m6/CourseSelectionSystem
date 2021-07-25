@@ -17,5 +17,8 @@ namespace CourseSelectionSystem
         public long Serial { get; set; }
         public string StudentNumber { get; set; }
         public string CourseNumber { get; set; }
+    
+        public virtual CourseMain CourseMain { get; set; }
+        public virtual StudentMain StudentMain { get; set; }
     }
 }

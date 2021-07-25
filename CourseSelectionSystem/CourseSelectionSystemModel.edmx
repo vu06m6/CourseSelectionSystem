@@ -7,7 +7,7 @@
     <Schema Namespace="CourseSelectionSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CourseMain">
           <Key>
-            <PropertyRef Name="Serial" />
+            <PropertyRef Name="Number" />
           </Key>
           <Property Name="Serial" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Number" Type="varchar" MaxLength="4" Nullable="false" />
@@ -26,7 +26,7 @@
         </EntityType>
         <EntityType Name="StudentMain">
           <Key>
-            <PropertyRef Name="Serial" />
+            <PropertyRef Name="Number" />
           </Key>
           <Property Name="Serial" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Number" Type="varchar" MaxLength="5" Nullable="false" />
@@ -34,31 +34,63 @@
           <Property Name="Birthday" Type="date" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_StudentCourse_CourseMain">
+          <End Role="CourseMain" Type="Self.CourseMain" Multiplicity="1" />
+          <End Role="StudentCourse" Type="Self.StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseMain">
+              <PropertyRef Name="Number" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="CourseNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCourse_StudentMain">
+          <End Role="StudentMain" Type="Self.StudentMain" Multiplicity="1" />
+          <End Role="StudentCourse" Type="Self.StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentMain">
+              <PropertyRef Name="Number" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="StudentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CourseSelectionSystemModelStoreContainer">
           <EntitySet Name="CourseMain" EntityType="Self.CourseMain" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentCourse" EntityType="Self.StudentCourse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentMain" EntityType="Self.StudentMain" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_StudentCourse_CourseMain" Association="Self.FK_StudentCourse_CourseMain">
+            <End Role="CourseMain" EntitySet="CourseMain" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourse_StudentMain" Association="Self.FK_StudentCourse_StudentMain">
+            <End Role="StudentMain" EntitySet="StudentMain" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CourseSelectionSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="StudentCourse">
-          <Key>
-            <PropertyRef Name="Serial" />
-          </Key>
-          <Property Name="Serial" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CourseNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="CourseSelectionSystemEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="StudentCourse" EntityType="Self.StudentCourse" />
           <EntitySet Name="CourseMain" EntityType="CourseSelectionSystemModel.CourseMain" />
+          <EntitySet Name="StudentCourse" EntityType="CourseSelectionSystemModel.StudentCourse" />
           <EntitySet Name="StudentMain" EntityType="CourseSelectionSystemModel.StudentMain" />
+          <AssociationSet Name="FK_StudentCourse_CourseMain" Association="CourseSelectionSystemModel.FK_StudentCourse_CourseMain">
+            <End Role="CourseMain" EntitySet="CourseMain" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentCourse_StudentMain" Association="CourseSelectionSystemModel.FK_StudentCourse_StudentMain">
+            <End Role="StudentMain" EntitySet="StudentMain" />
+            <End Role="StudentCourse" EntitySet="StudentCourse" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CourseMain">
           <Key>
-            <PropertyRef Name="Serial" />
+            <PropertyRef Name="Number" />
           </Key>
           <Property Name="Serial" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Number" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
@@ -66,32 +98,59 @@
           <Property Name="Credits" Type="Int32" Nullable="false" />
           <Property Name="Location" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="LecturerName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="StudentCourse" Relationship="CourseSelectionSystemModel.FK_StudentCourse_CourseMain" FromRole="CourseMain" ToRole="StudentCourse" />
+        </EntityType>
+        <EntityType Name="StudentCourse">
+          <Key>
+            <PropertyRef Name="Serial" />
+          </Key>
+          <Property Name="Serial" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentNumber" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CourseNumber" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CourseMain" Relationship="CourseSelectionSystemModel.FK_StudentCourse_CourseMain" FromRole="StudentCourse" ToRole="CourseMain" />
+          <NavigationProperty Name="StudentMain" Relationship="CourseSelectionSystemModel.FK_StudentCourse_StudentMain" FromRole="StudentCourse" ToRole="StudentMain" />
         </EntityType>
         <EntityType Name="StudentMain">
           <Key>
-            <PropertyRef Name="Serial" />
+            <PropertyRef Name="Number" />
           </Key>
           <Property Name="Serial" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Number" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="StudentCourse" Relationship="CourseSelectionSystemModel.FK_StudentCourse_StudentMain" FromRole="StudentMain" ToRole="StudentCourse" />
         </EntityType>
-      </Schema>
+        <Association Name="FK_StudentCourse_CourseMain">
+          <End Type="CourseSelectionSystemModel.CourseMain" Role="CourseMain" Multiplicity="1" />
+          <End Type="CourseSelectionSystemModel.StudentCourse" Role="StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseMain">
+              <PropertyRef Name="Number" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="CourseNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentCourse_StudentMain">
+          <End Type="CourseSelectionSystemModel.StudentMain" Role="StudentMain" Multiplicity="1" />
+          <End Type="CourseSelectionSystemModel.StudentCourse" Role="StudentCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentMain">
+              <PropertyRef Name="Number" />
+            </Principal>
+            <Dependent Role="StudentCourse">
+              <PropertyRef Name="StudentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CourseSelectionSystemModelStoreContainer" CdmEntityContainer="CourseSelectionSystemEntities">
-          <EntitySetMapping Name="StudentCourse">
-            <EntityTypeMapping TypeName="CourseSelectionSystemModel.StudentCourse">
-              <MappingFragment StoreEntitySet="StudentCourse">
-                <ScalarProperty Name="Serial" ColumnName="Serial" />
-                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
-                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CourseMain">
             <EntityTypeMapping TypeName="CourseSelectionSystemModel.CourseMain">
               <MappingFragment StoreEntitySet="CourseMain">
@@ -100,6 +159,15 @@
                 <ScalarProperty Name="Credits" ColumnName="Credits" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentCourse">
+            <EntityTypeMapping TypeName="CourseSelectionSystemModel.StudentCourse">
+              <MappingFragment StoreEntitySet="StudentCourse">
+                <ScalarProperty Name="CourseNumber" ColumnName="CourseNumber" />
+                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
                 <ScalarProperty Name="Serial" ColumnName="Serial" />
               </MappingFragment>
             </EntityTypeMapping>

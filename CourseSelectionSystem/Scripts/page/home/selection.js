@@ -5,16 +5,19 @@
 
 function InitEvent() {
     $(".btAdd, .btSave").on("click", function () {
+        var checked = [];
+        $(".cbCourse:checked").each(function () {
+            checked.push($(this).val());
+        });
+
         let data = {
-            Serial: $("#rqSerial").val(),
-            Number: $("#rqNumber").val(),
-            Name: $("#rqName").val(),
-            Birthday: $("#rqBirthday").val(),
-            Email: $("#rqEmail").val(),
+            StudentNumber: $("#rqStudent").val(),
+            CheckedCourse: checked
         };
-        $.post("../Home/StudentModify", data, function (data) {
+        $.post("../Home/SelectionModify", data, function (data) {
             if (data.code === "S") {
-                $("input").val("");
+                $("#rqStudent").val();
+                $(".cbCourse").prop("checked", false);
                 $(".btSave").addClass("d-none");
                 $(".btAdd").removeClass("d-none");
                 BindTable();
@@ -28,21 +31,20 @@ function InitEvent() {
 }
 
 function BindTable() {
-    $.get("../Home/StudentTable", function (data) {
+    $.get("../Home/SelectionTable", function (data) {
         $("#Partialable").html(data);
         $(".btEdit").on("click", function () {
             let data = JSON.parse($(this).attr("data-json"));
-            $("#rqSerial").val(data.Serial);
-            $("#rqNumber").val(data.Number);
-            $("#rqName").val(data.Name);
-            $("#rqBirthday").val(data.Birthday);
-            $("#rqEmail").val(data.Email);
+            $("#rqStudent").val(data.StudentNumber);
+            $.each(data.CheckedCourse, function (idx, val) {
+                $(".cbCourse[value='" + val + "']").prop("checked", true);
+            });
             $(".btAdd").addClass("d-none");
             $(".btSave").removeClass("d-none");
         });
         $(".btDelete").on("click", function () {
             if (confirm("確定刪除?")) {
-                $.post("../Home/StudentDelete?serial=" + $(this).attr("data-id"), function (data) {
+                $.post("../Home/SelectionDelete?studentnumber=" + $(this).attr("data-id"), function (data) {
                     if (data.code === "S") {
                         BindTable();
                         alert(data.message);

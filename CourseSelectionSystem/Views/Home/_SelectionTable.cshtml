@@ -1,0 +1,39 @@
+﻿@using Newtonsoft.Json;
+@model IEnumerable<CourseSelectionSystem.Models.SelectionModel>
+@{
+    Layout = null;
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course)
+        </th>
+        <th></th>
+    </tr>
+    @if (!Model.Any())
+    {
+        <tr>
+            <td colspan="5" align="center">
+                查無資料
+            </td>
+        </tr>
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course)
+            </td>
+            <td>
+                <button type="button" class="btDelete btn btn-danger" data-id="@item.StudentNumber">刪除</button>
+                <button type="button" class="btEdit btn btn-primary" data-json="@JsonConvert.SerializeObject(item)">編輯</button>
+            </td>
+        </tr>
+    }
+</table>

@@ -5,9 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="bb1bd8a1b3684eb784bd168c48cfa87f" Name="Diagram1">
-        <EntityTypeShape EntityType="CourseSelectionSystemModel.StudentCourse" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CourseSelectionSystemModel.CourseMain" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="CourseSelectionSystemModel.StudentMain" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="CourseSelectionSystemModel.CourseMain" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="CourseSelectionSystemModel.StudentCourse" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="CourseSelectionSystemModel.StudentMain" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="CourseSelectionSystemModel.FK_StudentCourse_CourseMain" />
+        <AssociationConnector Association="CourseSelectionSystemModel.FK_StudentCourse_StudentMain" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,4 +1,28 @@
 ﻿@{
     ViewBag.Title = "課程編輯";
 }
-<p>Use this area to provide additional information.</p>
+<h2>課程編輯</h2>
+<form id="rqForm">
+    <input id="rqSerial" type="hidden" />
+    <div class="form-group form-inline">
+        <label for="rqNumber" class="col-form-label">課號</label>
+        <input id="rqNumber" type="text" class="form-control mx-3" />
+        <label for="rqName" class="col-form-label">課名</label>
+        <input id="rqName" type="text" class="form-control mx-3" />
+        <label for="rqCredits" class="col-form-label">學分數</label>
+        <input id="rqCredits" type="number" class="form-control mx-3" />
+    </div>
+    <div class="form-group form-inline">
+        <label for="rqLocation" class="col-form-label">上課地點</label>
+        <input id="rqLocation" type="text" class="form-control mx-3" />
+        <label for="rqLecturerName" class="col-form-label">講師名字</label>
+        <input id="rqLecturerName" type="text" class="form-control mx-3" />
+        <button type="button" class="btAdd btn btn-primary">新增</button>
+        <button type="button" class="btSave btn btn-primary d-none">儲存</button>
+    </div>
+</form>
+<div id="Partialable"></div>
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript" src="~/Scripts/page/home/course.js"></script>

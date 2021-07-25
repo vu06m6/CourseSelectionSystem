@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CourseSelectionSystem.Models
 {
@@ -18,14 +14,5 @@ namespace CourseSelectionSystem.Models
         public string Birthday { get; set; }
         [Display(Name = "Email")]
         public string Email { get; set; }
-        public StudentModel() { }
-        public StudentModel(StudentMain data)
-        {
-            Serial = data.Serial.ToString();
-            Number = data.Number;
-            Name = data.Name;
-            Birthday = data.Birthday.ToString("yyyy-MM-dd");
-            Email = data.Email;
-        }
     }
 }

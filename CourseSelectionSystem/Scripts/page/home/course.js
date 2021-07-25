@@ -9,10 +9,11 @@ function InitEvent() {
             Serial: $("#rqSerial").val(),
             Number: $("#rqNumber").val(),
             Name: $("#rqName").val(),
-            Birthday: $("#rqBirthday").val(),
-            Email: $("#rqEmail").val(),
+            Credits: $("#rqCredits").val(),
+            Location: $("#rqLocation").val(),
+            LecturerName: $("#rqLecturerName").val()
         };
-        $.post("../Home/StudentModify", data, function (data) {
+        $.post("../Home/CourseModify", data, function (data) {
             if (data.code === "S") {
                 $("input").val("");
                 $(".btSave").addClass("d-none");
@@ -28,21 +29,22 @@ function InitEvent() {
 }
 
 function BindTable() {
-    $.get("../Home/StudentTable", function (data) {
+    $.get("../Home/CourseTable", function (data) {
         $("#Partialable").html(data);
         $(".btEdit").on("click", function () {
             let data = JSON.parse($(this).attr("data-json"));
             $("#rqSerial").val(data.Serial);
             $("#rqNumber").val(data.Number);
             $("#rqName").val(data.Name);
-            $("#rqBirthday").val(data.Birthday);
-            $("#rqEmail").val(data.Email);
+            $("#rqCredits").val(data.Credits);
+            $("#rqLocation").val(data.Location);
+            $("#rqLecturerName").val(data.LecturerName);
             $(".btAdd").addClass("d-none");
             $(".btSave").removeClass("d-none");
         });
         $(".btDelete").on("click", function () {
             if (confirm("確定刪除?")) {
-                $.post("../Home/StudentDelete?serial=" + $(this).attr("data-id"), function (data) {
+                $.post("../Home/CourseDelete?serial=" + $(this).attr("data-id"), function (data) {
                     if (data.code === "S") {
                         BindTable();
                         alert(data.message);

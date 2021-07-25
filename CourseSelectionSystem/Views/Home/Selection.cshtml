@@ -1,4 +1,33 @@
 ﻿@{
     ViewBag.Title = "選課";
 }
-<p>Use this area to provide additional information.</p>
+<h2>選課</h2>
+<form id="rqForm">
+    <div class="form-group form-inline">
+        <label for="rqStudent">學生</label>
+        <select class="form-control  mx-3" id="rqStudent">
+            @foreach (var item in (List<StudentMain>)ViewBag.Students)
+            {
+                <option value="@item.Number">
+                    @($"{item.Number}({item.Name})")
+                </option>
+            }
+        </select>
+        <button type="button" class="btAdd btn btn-primary">新增</button>
+        <button type="button" class="btSave btn btn-primary d-none">儲存</button>
+    </div>
+    <div class="form-group form-inline">
+        @foreach (var item in (List<CourseMain>)ViewBag.Courses)
+        {
+            <div class="form-check form-check-inline">
+                <input class="cbCourse form-check-input" type="checkbox" id="@($"cb{item.Number}")" value="@item.Number">
+                <label class="form-check-label" for="@($"cb{item.Number}")">@item.Name</label>
+            </div>
+        }
+    </div>
+</form>
+<div id="Partialable"></div>
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript" src="~/Scripts/page/home/selection.js"></script>

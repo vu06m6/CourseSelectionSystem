@@ -25,8 +25,8 @@ namespace CourseSelectionSystem
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<StudentCourse> StudentCourse { get; set; }
         public virtual DbSet<CourseMain> CourseMain { get; set; }
+        public virtual DbSet<StudentCourse> StudentCourse { get; set; }
         public virtual DbSet<StudentMain> StudentMain { get; set; }
     }
 }

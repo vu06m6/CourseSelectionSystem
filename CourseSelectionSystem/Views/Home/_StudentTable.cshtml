@@ -1,0 +1,43 @@
+﻿@using Newtonsoft.Json;
+@model IEnumerable<CourseSelectionSystem.Models.StudentModel>
+@{
+    Layout = null;
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <button type="button" class="btDelete btn btn-danger" data-id="@item.Serial">刪除</button>
+                <button type="button" class="btEdit btn btn-primary" data-json="@JsonConvert.SerializeObject(item)">編輯</button>
+            </td>
+        </tr>
+    }
+</table>

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - 選課系統</title>
@@ -9,34 +9,34 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <b>
-                    @Html.ActionLink("選課系統", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </b>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("課程編輯", "CourseQuery", "Home")</li>
-                    <li>@Html.ActionLink("學生編輯", "StudentQuery", "Home")</li>
-                    <li>@Html.ActionLink("選課", "SelectionQuery", "Home")</li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <b>
+            @Html.ActionLink("選課系統", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </b>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a>@Html.ActionLink("課程編輯", "Course", "Home", new { area = "" }, new { @class = "nav-link" })</a>
+                </li>
+                <li class="nav-item active">
+                    <a>@Html.ActionLink("學生編輯", "Student", "Home", new { area = "" }, new { @class = "nav-link" })</a>
+                </li>
+                <li class="nav-item active">
+                    <a>@Html.ActionLink("選課", "Selection", "Home", new { area = "" }, new { @class = "nav-link" })</a>
+                </li>
+            </ul>
         </div>
-    </div>
-    <div class="container body-content">
+    </nav>
+    <main role="main" class="container">
         @RenderBody()
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - 選課系統</p>
         </footer>
-    </div>
+    </main>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

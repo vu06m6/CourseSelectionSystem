@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "學生編輯";
+}
+
+<h2>學生編輯</h2>
+<form id="rqForm">
+    <input id="rqSerial" type="hidden" />
+    <div class="form-group form-inline">
+        <label for="rqNumber" class="col-form-label" >學號</label>
+        <input id="rqNumber" type="text" class="form-control mx-3"/>
+        <label for="rqName" class="col-form-label">姓名</label>
+        <input id="rqName" type="text" class="form-control mx-3"/>
+    </div>
+    <div class="form-group form-inline">
+        <label for="rqBirthday" class="col-form-label">生日</label>
+        <input id="rqBirthday" type="text" class="form-control mx-3" />
+        <label for="rqEmail" class="col-form-label">Email</label>
+        <input id="rqEmail" type="text" class="form-control mx-3" />
+        <button type="button" class="btAdd btn btn-primary">新增</button>
+        <button type="button" class="btSave btn btn-primary d-none">儲存</button>
+    </div>
+</form>
+<div id="StudentTable"></div>
+<script type="text/javascript" src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript" src="~/Scripts/page/home/student.js"></script>

@@ -15,9 +15,7 @@ function InitEvent() {
         };
         $.post("../Home/CourseModify", data, function (data) {
             if (data.code === "S") {
-                $("input").val("");
-                $(".btSave").addClass("d-none");
-                $(".btAdd").removeClass("d-none");
+                ClearText();
                 BindTable();
                 alert(data.message);
             }
@@ -31,7 +29,8 @@ function InitEvent() {
 function BindTable() {
     $.get("../Home/CourseTable", function (data) {
         $("#Partialable").html(data);
-        $(".btEdit").on("click", function () {
+        $(".btEdit").on("click", async function () {
+            await ClearText();
             let data = JSON.parse($(this).attr("data-json"));
             $("#rqSerial").val(data.Serial);
             $("#rqNumber").val(data.Number);
@@ -44,7 +43,8 @@ function BindTable() {
         });
         $(".btDelete").on("click", function () {
             if (confirm("確定刪除?")) {
-                $.post("../Home/CourseDelete?serial=" + $(this).attr("data-id"), function (data) {
+                let data = { serial: $(this).attr("data-id") };
+                $.post("../Home/CourseDelete", data, function (data) {
                     if (data.code === "S") {
                         BindTable();
                         alert(data.message);
@@ -56,4 +56,10 @@ function BindTable() {
             }
         });
     });
+}
+
+function ClearText() {
+    $("input").val("");
+    $(".btSave").addClass("d-none");
+    $(".btAdd").removeClass("d-none");
 }

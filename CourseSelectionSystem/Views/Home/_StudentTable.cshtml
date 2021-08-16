@@ -3,11 +3,10 @@
 @{
     Layout = null;
 }
-<script>
-    if (@ViewBag.Error) {
-        alert("@ViewBag.Error");
-    }
-</script>
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <script>alert("@ViewBag.Error");</script>
+}
 <table class="table">
     <tr>
         <th>

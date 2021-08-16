@@ -16,10 +16,7 @@ function InitEvent() {
         };
         $.post("../Home/SelectionModify", data, function (data) {
             if (data.code === "S") {
-                $("#rqStudent").val();
-                $(".cbCourse").prop("checked", false);
-                $(".btSave").addClass("d-none");
-                $(".btAdd").removeClass("d-none");
+                ClearText();
                 BindTable();
                 alert(data.message);
             }
@@ -33,7 +30,8 @@ function InitEvent() {
 function BindTable() {
     $.get("../Home/SelectionTable", function (data) {
         $("#Partialable").html(data);
-        $(".btEdit").on("click", function () {
+        $(".btEdit").on("click", async function () {
+            await ClearText();
             let data = JSON.parse($(this).attr("data-json"));
             $("#rqStudent").val(data.StudentNumber);
             $.each(data.CheckedCourse, function (idx, val) {
@@ -44,7 +42,8 @@ function BindTable() {
         });
         $(".btDelete").on("click", function () {
             if (confirm("確定刪除?")) {
-                $.post("../Home/SelectionDelete?studentnumber=" + $(this).attr("data-id"), function (data) {
+                let data = { studentnumber: $(this).attr("data-id") };
+                $.post("../Home/SelectionDelete", data, function (data) {
                     if (data.code === "S") {
                         BindTable();
                         alert(data.message);
@@ -56,4 +55,11 @@ function BindTable() {
             }
         });
     });
+}
+
+function ClearText() {
+    $("#rqStudent").val($("#rqStudent option").first().val());
+    $(".cbCourse").prop("checked", false);
+    $(".btSave").addClass("d-none");
+    $(".btAdd").removeClass("d-none");
 }
